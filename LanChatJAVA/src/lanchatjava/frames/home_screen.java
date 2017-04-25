@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lanchatjava;
+package lanchatjava.frames;
 
 /**
  *
@@ -16,6 +16,7 @@ public class home_screen extends javax.swing.JFrame {
      */
     public home_screen() {
         initComponents();
+        this.setTitle("Home");
     }
 
     /**
