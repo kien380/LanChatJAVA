@@ -393,6 +393,14 @@ public class chat_client extends javax.swing.JFrame {
         });
     }
     
+    public void start() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new chat_client().setVisible(true);
+            }
+        });
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_anonymous;
     private javax.swing.JButton b_connect;

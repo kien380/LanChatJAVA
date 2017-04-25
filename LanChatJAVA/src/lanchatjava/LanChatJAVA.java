@@ -16,6 +16,8 @@ public class LanChatJAVA {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        home_screen home = new home_screen();
+        home.start();
     }
     
 }

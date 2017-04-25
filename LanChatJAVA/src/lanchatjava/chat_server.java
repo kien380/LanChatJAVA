@@ -354,6 +354,14 @@ public class chat_server extends javax.swing.JFrame {
             }
         } 
     }
+    
+    public void start() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new chat_server().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_clear;
