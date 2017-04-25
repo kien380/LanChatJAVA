@@ -5,6 +5,9 @@
  */
 package lanchatjava;
 
+import lanchatjava.frames.home_screen;
+import lanchatjava.frames.login_screen;
+
 /**
  *
  * @author user
@@ -16,6 +19,8 @@ public class LanChatJAVA {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        login_screen login = new login_screen();
+        login.start();
     }
     
 }

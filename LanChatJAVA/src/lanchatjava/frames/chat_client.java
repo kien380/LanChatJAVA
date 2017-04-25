@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lanchatjava;
+package lanchatjava.frames;
 
 import java.io.BufferedReader;
 import java.io.DataInput;
@@ -142,6 +142,7 @@ public class chat_client extends javax.swing.JFrame {
      */
     public chat_client() {
         initComponents();
+        this.setTitle("Client");
     }
 
     /**
@@ -158,7 +159,6 @@ public class chat_client extends javax.swing.JFrame {
         tf_username = new javax.swing.JTextField();
         tf_chat = new javax.swing.JTextField();
         b_send = new javax.swing.JButton();
-        lb_title = new javax.swing.JLabel();
         tf_address = new javax.swing.JTextField();
         tf_port = new javax.swing.JTextField();
         b_connect = new javax.swing.JButton();
@@ -185,8 +185,6 @@ public class chat_client extends javax.swing.JFrame {
                 b_sendActionPerformed(evt);
             }
         });
-
-        lb_title.setText("Client");
 
         tf_address.setText("Address");
         tf_address.addActionListener(new java.awt.event.ActionListener() {
@@ -226,7 +224,7 @@ public class chat_client extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
@@ -247,25 +245,19 @@ public class chat_client extends javax.swing.JFrame {
                                 .addComponent(b_connect, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(b_disconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(b_anonymous, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(b_anonymous, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(tf_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tf_username, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                            .addComponent(b_send, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(218, 218, 218)
-                .addComponent(lb_title)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(tf_username)
+                            .addComponent(b_send, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lb_title)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lb_address)
@@ -283,7 +275,7 @@ public class chat_client extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(tf_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(b_send, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                        .addComponent(b_send, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(tf_chat))
                 .addContainerGap())
         );
@@ -393,6 +385,14 @@ public class chat_client extends javax.swing.JFrame {
         });
     }
     
+    public void start() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new chat_client().setVisible(true);
+            }
+        });
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_anonymous;
     private javax.swing.JButton b_connect;
@@ -401,7 +401,6 @@ public class chat_client extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lb_address;
     private javax.swing.JLabel lb_port;
-    private javax.swing.JLabel lb_title;
     private javax.swing.JTextArea ta_chat;
     private javax.swing.JTextField tf_address;
     private javax.swing.JTextField tf_chat;
