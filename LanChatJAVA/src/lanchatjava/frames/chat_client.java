@@ -20,7 +20,8 @@ import java.util.ArrayList;
  */
 public class chat_client extends javax.swing.JFrame {
 
-    String username, address = "localhost";
+    String address = "localhost";
+    String username = "User";
     ArrayList<String> users = new ArrayList();
     int port = 2222;
     Boolean isConnected = false;
@@ -28,6 +29,8 @@ public class chat_client extends javax.swing.JFrame {
     Socket sock;
     BufferedReader reader;
     PrintWriter writer;
+    
+    javax.swing.JFrame login;
     
     //--------------------------//
     
@@ -90,8 +93,9 @@ public class chat_client extends javax.swing.JFrame {
             ta_chat.append("Failed to disconnect. \n");
         }
         isConnected = false;
-        tf_username.setEditable(true);
-
+        tf_address.setEditable(true);
+        tf_port.setEditable(true);
+        tf_chat.setEditable(false);
     }
     
     //--------------------------//
@@ -140,9 +144,11 @@ public class chat_client extends javax.swing.JFrame {
     /**
      * Creates new form chat_client
      */
-    public chat_client() {
+    public chat_client(String username, javax.swing.JFrame login) {
         initComponents();
-        this.setTitle("Client");
+        this.setTitle(username);
+        this.username = username;
+        this.login = login;
     }
 
     /**
@@ -156,7 +162,6 @@ public class chat_client extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         ta_chat = new javax.swing.JTextArea();
-        tf_username = new javax.swing.JTextField();
         tf_chat = new javax.swing.JTextField();
         b_send = new javax.swing.JButton();
         tf_address = new javax.swing.JTextField();
@@ -165,19 +170,12 @@ public class chat_client extends javax.swing.JFrame {
         b_disconnect = new javax.swing.JButton();
         lb_address = new javax.swing.JLabel();
         lb_port = new javax.swing.JLabel();
-        b_anonymous = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         ta_chat.setColumns(20);
         ta_chat.setRows(5);
         jScrollPane1.setViewportView(ta_chat);
-
-        tf_username.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_usernameActionPerformed(evt);
-            }
-        });
 
         b_send.setText("Send");
         b_send.addActionListener(new java.awt.event.ActionListener() {
@@ -213,13 +211,6 @@ public class chat_client extends javax.swing.JFrame {
 
         lb_port.setText("Port:");
 
-        b_anonymous.setText("Anonymous");
-        b_anonymous.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b_anonymousActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -227,32 +218,29 @@ public class chat_client extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lb_address)
+                            .addComponent(lb_port))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tf_address, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tf_port, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(81, 81, 81)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(b_connect, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(b_disconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(tf_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lb_port)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tf_port, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lb_address)
-                                .addGap(10, 10, 10)
-                                .addComponent(tf_address, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(b_connect, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(b_disconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(b_anonymous, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(tf_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tf_username)
-                            .addComponent(b_send, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                                .addComponent(b_send, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,31 +249,23 @@ public class chat_client extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lb_address)
-                    .addComponent(b_anonymous))
+                    .addComponent(b_connect))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lb_port)
-                    .addComponent(b_connect)
                     .addComponent(b_disconnect))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(tf_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(b_send, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(tf_chat))
+                    .addComponent(tf_chat)
+                    .addComponent(b_send, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tf_usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_usernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_usernameActionPerformed
 
     private void b_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_sendActionPerformed
         String nothing = "";
@@ -314,16 +294,22 @@ public class chat_client extends javax.swing.JFrame {
     private void b_disconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_disconnectActionPerformed
         sendDisconnect();
         Disconnect();
+        this.setVisible(false);
+        this.login.setVisible(true);
     }//GEN-LAST:event_b_disconnectActionPerformed
 
     private void b_connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_connectActionPerformed
         if (isConnected == false) 
         {
-            username = tf_username.getText();
-            tf_username.setEditable(false);
-
+            tf_address.setEditable(false);
+            tf_port.setEditable(false);
+            tf_chat.setEditable(true);
+            
             try 
             {
+                address = tf_address.getText();
+                port = Integer.parseInt(tf_port.getText());
+
                 sock = new Socket(address, port);
                 InputStreamReader streamreader = new InputStreamReader(sock.getInputStream());
                 reader = new BufferedReader(streamreader);
@@ -335,7 +321,9 @@ public class chat_client extends javax.swing.JFrame {
             catch (Exception ex) 
             {
                 ta_chat.append("Cannot Connect! Try Again. \n");
-                tf_username.setEditable(true);
+                tf_address.setEditable(true);
+                tf_port.setEditable(true);
+                tf_chat.setEditable(false);
             }
             
             ListenThread();
@@ -346,55 +334,15 @@ public class chat_client extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_b_connectActionPerformed
 
-    private void b_anonymousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_anonymousActionPerformed
-        
-    }//GEN-LAST:event_b_anonymousActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(chat_client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(chat_client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(chat_client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(chat_client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new chat_client().setVisible(true);
-            }
-        });
-    }
-    
     public void start() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new chat_client().setVisible(true);
+                new chat_client(username, login).setVisible(true);
             }
         });
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b_anonymous;
     private javax.swing.JButton b_connect;
     private javax.swing.JButton b_disconnect;
     private javax.swing.JButton b_send;
@@ -405,6 +353,5 @@ public class chat_client extends javax.swing.JFrame {
     private javax.swing.JTextField tf_address;
     private javax.swing.JTextField tf_chat;
     private javax.swing.JTextField tf_port;
-    private javax.swing.JTextField tf_username;
     // End of variables declaration//GEN-END:variables
 }

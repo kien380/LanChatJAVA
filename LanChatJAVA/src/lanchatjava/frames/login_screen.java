@@ -136,9 +136,14 @@ public class login_screen extends javax.swing.JFrame {
                     server.start();
                 } else {
                     // Open Chat Client
-                    chat_client client = new chat_client();
+                    username = tf_username.getText();
+                    chat_client client = new chat_client(username, this);
                     client.start();
                 }
+                
+                // Close login_screen
+                this.setVisible(false);
+                
             } else {
                 JOptionPane.showMessageDialog(this, 
                         "Wrong password", 

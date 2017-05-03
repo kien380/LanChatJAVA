@@ -5,7 +5,6 @@
  */
 package lanchatjava;
 
-import lanchatjava.frames.home_screen;
 import lanchatjava.frames.login_screen;
 
 /**
