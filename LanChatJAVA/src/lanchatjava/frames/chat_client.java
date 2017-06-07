@@ -5,6 +5,7 @@
  */
 package lanchatjava.frames;
 
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.DataInput;
 import java.io.DataInputStream;
@@ -27,6 +28,7 @@ public class chat_client extends javax.swing.JFrame {
     Boolean isConnected = false;
     
     Socket sock;
+    
     BufferedReader reader;
     PrintWriter writer;
     
@@ -170,14 +172,28 @@ public class chat_client extends javax.swing.JFrame {
         b_disconnect = new javax.swing.JButton();
         lb_address = new javax.swing.JLabel();
         lb_port = new javax.swing.JLabel();
+        b_call = new javax.swing.JButton();
+        b_attachments = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        ta_chat.setEditable(false);
         ta_chat.setColumns(20);
         ta_chat.setRows(5);
         jScrollPane1.setViewportView(ta_chat);
 
-        b_send.setText("Send");
+        tf_chat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_chatActionPerformed(evt);
+            }
+        });
+        tf_chat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_chatKeyPressed(evt);
+            }
+        });
+
+        b_send.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/drawable/send.png"))); // NOI18N
         b_send.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_sendActionPerformed(evt);
@@ -211,6 +227,20 @@ public class chat_client extends javax.swing.JFrame {
 
         lb_port.setText("Port:");
 
+        b_call.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/drawable/telephone.png"))); // NOI18N
+        b_call.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_callActionPerformed(evt);
+            }
+        });
+
+        b_attachments.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/drawable/attachments.png"))); // NOI18N
+        b_attachments.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_attachmentsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -235,11 +265,14 @@ public class chat_client extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(tf_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(b_send, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tf_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(b_send, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(b_call, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(b_attachments, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -256,35 +289,22 @@ public class chat_client extends javax.swing.JFrame {
                     .addComponent(lb_port)
                     .addComponent(b_disconnect))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tf_chat)
-                    .addComponent(b_send, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(b_call, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(b_attachments, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(b_send, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_chat, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void b_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_sendActionPerformed
-        String nothing = "";
-        if ((tf_chat.getText()).equals(nothing)) {
-            tf_chat.setText("");
-            tf_chat.requestFocus();
-        } else {
-            try {
-               writer.println(username + ":" + tf_chat.getText() + ":" + "Chat");
-               writer.flush(); // flushes the buffer
-            } catch (Exception ex) {
-                ta_chat.append("Message was not sent. \n");
-            }
-            tf_chat.setText("");
-            tf_chat.requestFocus();
-        }
-
-        tf_chat.setText("");
-        tf_chat.requestFocus();
+        sendMessage();
     }//GEN-LAST:event_b_sendActionPerformed
 
     private void tf_addressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_addressActionPerformed
@@ -311,7 +331,8 @@ public class chat_client extends javax.swing.JFrame {
                 port = Integer.parseInt(tf_port.getText());
 
                 sock = new Socket(address, port);
-                InputStreamReader streamreader = new InputStreamReader(sock.getInputStream());
+                InputStreamReader streamreader = 
+                        new InputStreamReader(sock.getInputStream());
                 reader = new BufferedReader(streamreader);
                 writer = new PrintWriter(sock.getOutputStream());
                 writer.println(username + ":has connected.:Connect");
@@ -334,6 +355,24 @@ public class chat_client extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_b_connectActionPerformed
 
+    private void b_callActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_callActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b_callActionPerformed
+
+    private void b_attachmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_attachmentsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b_attachmentsActionPerformed
+
+    private void tf_chatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_chatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_chatActionPerformed
+
+    private void tf_chatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_chatKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            sendMessage();
+        }
+    }//GEN-LAST:event_tf_chatKeyPressed
+
     public void start() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -342,7 +381,37 @@ public class chat_client extends javax.swing.JFrame {
         });
     }
     
+    private void sendMessage() {
+        String nothing = "";
+        if ((tf_chat.getText()).equals(nothing)) {
+            tf_chat.setText("");
+            tf_chat.requestFocus();
+        } else {
+            try {
+               writer.println(username + ":" + tf_chat.getText() + ":" + "Chat");
+               writer.flush(); // flushes the buffer
+            } catch (Exception ex) {
+                ta_chat.append("Message was not sent. \n");
+            }
+            tf_chat.setText("");
+            tf_chat.requestFocus();
+        }
+
+        tf_chat.setText("");
+        tf_chat.requestFocus();
+    }
+    
+    private void voiceCall() {
+        
+    }
+    
+    private void sendFile() {
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b_attachments;
+    private javax.swing.JButton b_call;
     private javax.swing.JButton b_connect;
     private javax.swing.JButton b_disconnect;
     private javax.swing.JButton b_send;

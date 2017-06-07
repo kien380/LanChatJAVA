@@ -124,6 +124,7 @@ public class chat_server extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        ta_chat.setEditable(false);
         ta_chat.setColumns(20);
         ta_chat.setRows(5);
         jScrollPane1.setViewportView(ta_chat);
@@ -275,13 +276,15 @@ public class chat_server extends javax.swing.JFrame {
 
                 while (true) 
                 {
-				Socket clientSock = serverSock.accept();
-				PrintWriter writer = new PrintWriter(clientSock.getOutputStream());
-				clientOutputStreams.add(writer);
+                    Socket clientSock = serverSock.accept();
+                    PrintWriter writer = 
+                            new PrintWriter(clientSock.getOutputStream());
+                    clientOutputStreams.add(writer);
 
-				Thread listener = new Thread(new ClientHandler(clientSock, writer));
-				listener.start();
-				ta_chat.append("Got a connection. \n");
+                    Thread listener = 
+                            new Thread(new ClientHandler(clientSock, writer));
+                    listener.start();
+                    ta_chat.append("Got a connection. \n");
                 }
             }
             catch (Exception ex)
