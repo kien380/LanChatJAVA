@@ -78,6 +78,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tf_username">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tf_usernameKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="b_login">
       <Properties>
@@ -90,6 +93,7 @@
     <Component class="javax.swing.JPasswordField" name="pf_password">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pf_passwordActionPerformed"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="pf_passwordKeyPressed"/>
       </Events>
     </Component>
   </SubComponents>
